@@ -7,26 +7,26 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/")
-public class UsersControllers {
+@RequestMapping("/api/user")
+public class UsersController {
 
-    @Autowired
-    private UserService userService;
+    @Autowired private UserService userService;
 
-    @GetMapping("/user/all")
+    @GetMapping("/all")
     public ResponseEntity<List<UserModel>> getUsers(){
         List<UserModel> userModelList = userService.getAllUsers();
         return ResponseEntity.ok().body(userModelList);
     }
 
-    @PostMapping("/user/add")
-    public ResponseEntity<List<UserModel>> addUsers(@RequestBody List<UserModel> userModelList){
+    @PostMapping("/add")
+    public ResponseEntity<UserModel> addUser(@RequestBody @Valid UserModel userModel){
 
-        List<UserModel> response = userService.createUsers(userModelList);
-        return new ResponseEntity<List<UserModel>>(response, HttpStatus.CREATED);
+        UserModel response = userService.createUser(userModel);
+        return new ResponseEntity<UserModel>(response, HttpStatus.CREATED);
     }
 
 }
