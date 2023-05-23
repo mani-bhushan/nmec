@@ -2,6 +2,9 @@ package com.apps.nmec.enums;
 
 public enum ERole {
     ADMIN ("ADMIN"),
+    COUNSELOR("COUNSELOR"),
+    CANDIDATE("CANDIDATE("),
+    STAFF ("STAFF"),
     USER ("USER");
 
     private final String roleAction;
@@ -12,7 +15,7 @@ public enum ERole {
     }
 
     // enum constructor - cannot be public or protected
-    private ERole(String roleAction) {
+    ERole(String roleAction) {
         this.roleAction = roleAction;
     }
 }

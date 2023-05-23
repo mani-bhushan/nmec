@@ -28,9 +28,9 @@ public class ControllerErrorHandler extends ResponseEntityExceptionHandler {
                         ifx.getValue(), ifx.getPath().get(ifx.getPath().size()-1).getFieldName(), Arrays.toString(ifx.getTargetType().getEnumConstants()));
             }
         }
-        ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setStatus(status);
-        errorResponse.setMessage(genericMessage);
+
+        ErrorResponse errorResponse = new ErrorResponse(status, genericMessage, errorDetails);
+
         return handleExceptionInternal(exception, errorResponse, headers, HttpStatus.BAD_REQUEST, request);
     }
 
