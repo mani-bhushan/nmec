@@ -18,18 +18,18 @@ public class ControllerErrorHandler extends ResponseEntityExceptionHandler {
     @Override
     public ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException exception,
                                                           HttpHeaders headers, HttpStatus status, WebRequest request) {
-        String genericMessage = "Unacceptable Request : " + exception.getMessage();
-        String errorDetails = genericMessage;
+
+        String errorDetails = exception.getMessage();
 
         if (exception.getCause() instanceof InvalidFormatException) {
             InvalidFormatException ifx = (InvalidFormatException) exception.getCause();
             if (ifx.getTargetType()!=null && ifx.getTargetType().isEnum()) {
-                errorDetails = String.format("Invalid enum value: '%s' for the field: '%s'. The value must be one of: %s.",
-                        ifx.getValue(), ifx.getPath().get(ifx.getPath().size()-1).getFieldName(), Arrays.toString(ifx.getTargetType().getEnumConstants()));
+                errorDetails = "Unprocessable Request : " + String.format("Invalid enum value: '%s' for the field: '%s'. The value must be one of: %s.",
+                        ifx.getValue(), ifx.getPath().get(0).getFieldName(), Arrays.toString(ifx.getTargetType().getEnumConstants()));
             }
         }
-
-        ErrorResponse errorResponse = new ErrorResponse(status, genericMessage, errorDetails);
+        // String genericMessage = "Unprocessable Request : " + exception.getMessage();
+        ErrorResponse errorResponse = new ErrorResponse().builder().status(HttpStatus.UNPROCESSABLE_ENTITY).message(errorDetails).build();
 
         return handleExceptionInternal(exception, errorResponse, headers, HttpStatus.BAD_REQUEST, request);
     }

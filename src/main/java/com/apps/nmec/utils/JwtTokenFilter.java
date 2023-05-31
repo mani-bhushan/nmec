@@ -55,8 +55,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
 	private String getAccessToken(HttpServletRequest request) {
 		String header = request.getHeader("Authorization");
-		String token = header.split(" ")[1].trim();
-		return token;
+		return header.split(" ")[1].trim();
 	}
 
 	private void setAuthenticationContext(String token, HttpServletRequest request) {
@@ -78,7 +77,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 		String roles = (String) claims.get("roles");
 
 		roles = roles.replace("[", "").replace("]", "");
-		String[] roleNames = roles.split(",");
+		String[] roleNames = roles.split(", ");
 		
 		for (String aRoleName : roleNames) {
 			userDetails.addRole(RoleEntity.builder().role(ERole.valueOf(aRoleName)).build());

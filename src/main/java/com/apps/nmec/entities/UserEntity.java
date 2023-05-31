@@ -3,9 +3,7 @@ package com.apps.nmec.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,10 +17,12 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper=true)
+@Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @Table(name = "user")
-public class UserEntity implements UserDetails, Serializable {
+public class UserEntity extends BaseUserEntity implements UserDetails, Serializable {
 	
 	private static final long serialVersionUID = 4926468583005150701L;
 
@@ -46,6 +46,7 @@ public class UserEntity implements UserDetails, Serializable {
 	@Column(name = "password", nullable = false)
 	private String password;
 
+	@Builder.Default
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(
 			name = "user_roles",

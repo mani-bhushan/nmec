@@ -3,7 +3,7 @@ package com.apps.nmec.enums;
 public enum ERole {
     ADMIN ("ADMIN"),
     COUNSELOR("COUNSELOR"),
-    CANDIDATE("CANDIDATE("),
+    CANDIDATE("CANDIDATE"),
     STAFF ("STAFF"),
     USER ("USER");
 

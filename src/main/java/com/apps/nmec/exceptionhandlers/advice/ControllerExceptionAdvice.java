@@ -1,10 +1,10 @@
 package com.apps.nmec.exceptionhandlers.advice;
 
 import com.apps.nmec.exceptionhandlers.CustomException;
+import com.apps.nmec.responses.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
@@ -13,7 +13,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler(value = { CustomException.class })
     public ResponseEntity<?> handleCustomException(CustomException ex) {
     	// logger.error("Exception: ", ex.getMessage());
-        return new ResponseEntity<>(ex, ex.getHttpStatus());
+        return new ResponseEntity<>(ErrorResponse.builder().message(ex.getErrorMessage()).status(ex.getHttpStatus()).build(), HttpStatus.BAD_REQUEST);
     }
     
     @ExceptionHandler(value = { NullPointerException.class })

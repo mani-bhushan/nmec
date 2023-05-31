@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,6 +29,12 @@ public class UserModel implements Serializable {
 	@JsonProperty("email") private String email;
 
 	@JsonProperty("password") private String password;
+
+	@JsonProperty("startDate") private LocalDateTime startDate;
+
+	@JsonProperty("endDate") private LocalDateTime endDate;
+
+	@JsonProperty("activeUser") private Boolean activeUser;
 
 	@JsonProperty("roles")
 	@Enumerated(EnumType.STRING)
