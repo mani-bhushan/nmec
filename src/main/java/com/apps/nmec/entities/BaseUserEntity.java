@@ -11,7 +11,7 @@ import javax.persistence.MappedSuperclass;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper=true)
 @MappedSuperclass
 public abstract class BaseUserEntity extends Auditable<String> implements Serializable {
 	
