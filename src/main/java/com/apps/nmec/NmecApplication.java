@@ -1,6 +1,8 @@
 package com.apps.nmec;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.apps.nmec.entities.RoleEntity;
+import com.apps.nmec.entities.UserEntity;
 import com.apps.nmec.enums.ERole;
 import com.apps.nmec.repositories.RoleRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -9,7 +11,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -32,9 +36,10 @@ public class NmecApplication {
 			final List<String> eRoleList = Stream.of(ERole.values()).map(Enum::name).collect(Collectors.toList());
 			existingRoles.removeAll(eRoleList);
 			existingRoles.forEach(name -> roleRepository.delete(roleRepository.findByRole(ERole.valueOf(name))));
+			Set<RoleEntity> roleSet = new HashSet<>();
+			roleSet.add(RoleEntity.builder().role(ERole.ADMIN).build());
+			UserEntity.builder().email("admin@nmec.com").name("Admin").roles(roleSet).password("Admin").build();
 
-			// userRepository.saveAndFlush(UserEntity.builder().email("mani.bhushan@gmail.com").name("Mani Bhushan").password("$2a$10$0kro7596/BYvZF2FECP.TeGHcI6s28OdxuUNm/uME2msnZFF5LgqS").roles(new HashSet<RoleEntity>(Collections.singleton(RoleEntity.builder().role(ERole.ADMIN).build()))).build());
 		};
 	}
-
 }

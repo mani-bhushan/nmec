@@ -20,13 +20,20 @@ public class ErrorResponse {
     private HttpStatus status;
     private String message;
     @Builder.Default
-    private List<String> errors = new ArrayList<>();
+    private List<AppError> errors = new ArrayList<>();
 
-    public ErrorResponse(HttpStatus status, String message, String error) {
+    public ErrorResponse(HttpStatus status, String message, AppError error) {
         super();
         this.status = status;
         this.message = message;
         this.errors.add(error);
     }
 
+    public ErrorResponse(String message, List<AppError> error) {
+        super();
+        this.status = HttpStatus.BAD_REQUEST;
+        this.message = message;
+        this.errors = new ArrayList<>();
+        this.errors.addAll(error);
+    }
 }

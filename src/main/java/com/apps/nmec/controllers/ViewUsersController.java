@@ -1,5 +1,6 @@
 package com.apps.nmec.controllers;
 
+import com.apps.nmec.enums.ERole;
 import com.apps.nmec.models.UserModel;
 import com.apps.nmec.services.ViewUsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/user-view")
@@ -34,6 +36,13 @@ public class ViewUsersController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<UserModel>> fetchUsersCreatedByEmailId(@PathVariable String emailId){
         List<UserModel> userModelList = viewUsersService.fetchUsersCreatedByEmailId(emailId);
+        return ResponseEntity.ok().body(userModelList);
+    }
+
+    @GetMapping("/all/counsellors")
+    @PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")
+    public ResponseEntity<List<UserModel>> getAllCounsellors(){
+        List<UserModel> userModelList = viewUsersService.getAllUsers().stream().filter(user->user.getRoles().contains(ERole.COUNSELOR)).collect(Collectors.toList());
         return ResponseEntity.ok().body(userModelList);
     }
 

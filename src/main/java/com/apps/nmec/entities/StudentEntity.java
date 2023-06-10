@@ -21,6 +21,8 @@ public class StudentEntity extends BaseEntity{
     @JsonProperty("id")
     String id;
 
+    String rollNo;
+
     LocalDateTime admissionDate;
 
     String receiptNo;
@@ -33,7 +35,9 @@ public class StudentEntity extends BaseEntity{
     @JoinColumn(name = "counselor_id", referencedColumnName = "id")
     UserEntity counselor;
 
-    String branch;
+    String faculty;
+
+    String session;
 
     String majorSubjects;
 
@@ -41,13 +45,15 @@ public class StudentEntity extends BaseEntity{
 
     String language;
 
-    String session;
-
     String name;
+
+    String gender;
 
     String fatherName;
 
     String motherName;
+
+    LocalDateTime dateOfBirth;
 
     String aadharNo;
 
@@ -64,14 +70,14 @@ public class StudentEntity extends BaseEntity{
     @OneToOne
     AddressEntity presentAddress;
 
+    @OneToOne
     AddressEntity permanentAddress;
 
     String maritalStatus;
 
+    @OneToMany
     List<AcademicDetails> academicDetails;
 
     String nationality;
-
-    String contactNo;
 
 }

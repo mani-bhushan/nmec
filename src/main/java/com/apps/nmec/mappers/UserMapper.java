@@ -26,7 +26,11 @@ public class UserMapper {
             userModel.setId(userEntity.getId());
             userModel.setName(userEntity.getName());
             userModel.setEmail(userEntity.getEmail());
-            userModel.setPassword(userEntity.getPassword());
+           // userModel.setPassword(userEntity.getPassword());
+            userModel.setContactNo(userEntity.getContactNo());
+            userModel.setStartDate(userEntity.getStartDate());
+            userModel.setEndDate(userEntity.getEndDate());
+            userModel.setActiveUser(userEntity.getActiveUser());
             userModel.setRoles(userEntity.getRoles().stream().map(RoleEntity::getRole).collect(Collectors.toSet()));
             // userEntity.getRoles().forEach( role -> { userModel.getRoles().add(role.getRole()); });
             userModelList.add(userModel);
@@ -43,6 +47,7 @@ public class UserMapper {
         userModel.setStartDate(userEntity.getStartDate());
         userModel.setEndDate(userEntity.getEndDate());
         userModel.setActiveUser(userEntity.getActiveUser());
+        userModel.setContactNo(userEntity.getContactNo());
         return userModel;
     }
 
@@ -56,6 +61,7 @@ public class UserMapper {
         userEntity.setStartDate(LocalDateTime.now());
         userEntity.setEndDate(LocalDateTime.now().plusDays(10));
         userEntity.setActiveUser(userModel.getActiveUser());
+        userEntity.setContactNo(userModel.getContactNo());
         return userEntity;
     }
 

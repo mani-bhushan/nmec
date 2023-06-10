@@ -46,6 +46,9 @@ public class UserEntity extends BaseUserEntity implements UserDetails, Serializa
 	@Column(name = "password", nullable = false)
 	private String password;
 
+	@Column(name="contactNo",nullable = false)
+	private String contactNo;
+
 	@Builder.Default
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(

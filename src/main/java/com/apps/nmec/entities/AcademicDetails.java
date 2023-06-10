@@ -5,10 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @EqualsAndHashCode(callSuper=true)
@@ -24,7 +21,7 @@ public class AcademicDetails extends Auditable<String> {
 
     String exam;
 
-    String department;
+    String faculty;
 
     String universityName;
 
@@ -38,6 +35,9 @@ public class AcademicDetails extends Auditable<String> {
 
     Integer obtainedMarks;
 
-    String grade;
+    String division;
 
+    @ManyToOne
+    @JoinColumn(name="student_id")
+    StudentEntity student;
 }
