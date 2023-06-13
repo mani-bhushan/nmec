@@ -2,19 +2,20 @@ package com.apps.nmec.responses;
 
 import com.apps.nmec.entities.AcademicDetails;
 import com.apps.nmec.entities.AddressEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
 @Builder
-public class StudentResponse {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class StudentResponse implements Serializable {
 
     private String rollNo;
 
@@ -22,7 +23,7 @@ public class StudentResponse {
 
     private String receiptNo;
 
-    private String counselorId;
+    private String counsellorId;
 
     private String faculty;
 

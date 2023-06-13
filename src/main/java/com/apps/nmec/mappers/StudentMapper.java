@@ -18,9 +18,9 @@ public interface StudentMapper {
 
     //@Mapping(target="startDate", ignore = true)
     //@Mapping(target="endDate", ignore = true)
-    @Mapping(target = "aadharNo",source = "studentRequest.aadharNo")
+    @Mapping(target = "aadharNo", source = "studentRequest.aadharNo")
     StudentEntity mapRequestToEntity(StudentRequest studentRequest);
 
-    //@Mapping(target="counsellorId", ignore = true)
+    @Mapping(target="counsellorId", source = "studentEntity.id")
     StudentResponse mapEntityToResponse(StudentEntity studentEntity);
 }
