@@ -9,10 +9,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
-
-import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
@@ -59,6 +58,7 @@ public class UserEntity extends BaseUserEntity implements UserDetails, Serializa
 	private Set<RoleEntity> roles = new HashSet<>();
 
 	public void addRole(RoleEntity roleEntity) {
+		if (this.roles.isEmpty()) { this.setRoles(new HashSet<>());}
 		this.roles.add(roleEntity);
 	}
 

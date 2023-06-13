@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -27,7 +28,10 @@ public class UserService {
 
     public UserModel createUser(final UserModel userModel) {
         final UserEntity userEntity = userMapper.mapUserModelToNewEntity(userModel);
-        userEntity.getRoles().add(roleRepository.findByRole(ERole.USER));
+        userEntity.setRoles(roleRepository.findByRoleIn(userModel.getRoles().stream()
+                .filter(e -> { return e != ERole.ADMIN; })
+                .collect(Collectors.toSet())));
+        if (!userModel.getRoles().contains(ERole.USER)) userEntity.addRole(roleRepository.findByRole(ERole.USER));
         userRepository.saveAndFlush(userEntity);
         return userMapper.mapUserEntityToNewModel(userEntity);
     }

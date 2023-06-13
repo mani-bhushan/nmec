@@ -2,6 +2,8 @@ package com.apps.nmec.requests;
 
 import com.apps.nmec.entities.AcademicDetails;
 import com.apps.nmec.entities.AddressEntity;
+import com.apps.nmec.entities.UserEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -18,78 +20,81 @@ import java.util.List;
 public class StudentRequest {
 
     @NotNull
-    String rollNo;
+    private String rollNo;
 
     @NotNull
-    LocalDateTime admissionDate;
+    private LocalDateTime admissionDate;
 
     @NotNull
-    String receiptNo;
+    private String receiptNo;
 
     @NotNull
-    String counselorId;
+    private String counsellorId;
 
     @NotNull
-    String faculty;
+    private String faculty;
 
     @NotNull
-    String session;
+    private String session;
 
     @NotNull
-    String majorSubjects;
+    private String majorSubjects;
 
     @NotNull
-    String irc;
+    private String irc;
 
     @NotNull
-    String language;
+    private String language;
 
     @NotNull
-    String name;
+    private String name;
 
     @NotNull
-    String gender;
+    private String gender;
 
     @NotNull
-    String fatherName;
+    private String fatherName;
 
     @NotNull
-    String motherName;
+    private String motherName;
 
     @NotNull
-    LocalDateTime dateOfBirth;
+    private LocalDateTime dateOfBirth;
 
     @NotNull
-    String aadharNo;
+    private String aadharNo;
 
     @NotNull
-    String mobileNo;
+    private String mobileNo;
 
     @NotNull
-    String religion;
+    private String religion;
 
     @NotNull
-    String emailId;
+    private String emailId;
 
     @NotNull
-    String category;
+    private String category;
 
     @NotNull
-    String caste;
+    private String caste;
 
     @NotNull
-    AddressEntity presentAddress;
+    private AddressEntity presentAddress;
 
     @NotNull
-    AddressEntity permanentAddress;
+    private AddressEntity permanentAddress;
 
     @NotNull
-    String maritalStatus;
+    private String maritalStatus;
 
     @NotNull
-    List<AcademicDetails> academicDetails;
+    private Set<AcademicDetails> academicDetails;
 
     @NotNull
-    String nationality;
+    private String nationality;
+
+    @JsonIgnore
+    private UserEntity user;
 
 }

@@ -7,6 +7,7 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
@@ -24,28 +25,37 @@ public class AcademicDetails extends Auditable<String> implements Serializable {
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id", columnDefinition = "VARCHAR(255)")
     @JsonProperty("id")
-    String id;
+    private String id;
 
-    String exam;
+    @NotNull
+    private String exam;
 
-    String faculty;
+    @NotNull
+    private String faculty;
 
-    String universityName;
+    @NotNull
+    private String universityName;
 
-    String collegeName;
+    @NotNull
+    private String collegeName;
 
-    String passingYear;
+    @NotNull
+    private String passingYear;
 
-    String subjectNames;
+    @NotNull
+    private String subjectNames;
 
-    Integer fullMarks;
+    @NotNull
+    private Integer fullMarks;
 
-    Integer obtainedMarks;
+    @NotNull
+    private Integer obtainedMarks;
 
-    String division;
+    @NotNull
+    private String division;
 
     @ManyToOne
     @JoinColumn(name="student_id")
     @JsonIgnore
-    StudentEntity student;
+    private StudentEntity student;
 }

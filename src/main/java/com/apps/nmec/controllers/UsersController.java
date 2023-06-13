@@ -19,9 +19,9 @@ public class UsersController {
 
     @Operation(summary = "add user")
     @PostMapping("/add")
-    //@PreAuthorize("hasAnyAuthority('ADMIN','COUNSELOR','STAFF')")
+    //@PreAuthorize("hasAnyAuthority('ADMIN','COUNSELLOR','STAFF')")
     public ResponseEntity<UserModel> addUser(@RequestBody @Valid UserModel userModel) {
-        UserModel response = userService.createUser(userModel);
+        final UserModel response = userService.createUser(userModel);
         return new ResponseEntity<UserModel>(response, HttpStatus.CREATED);
     }
 

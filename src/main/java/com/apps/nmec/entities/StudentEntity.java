@@ -1,18 +1,24 @@
 package com.apps.nmec.entities;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
-@Entity
-@EqualsAndHashCode(callSuper=true)
+
 @Data
-public class StudentEntity extends BaseEntity{
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper=true)
+@Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@Entity
+@Table(name = "student")
+public class StudentEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -21,63 +27,63 @@ public class StudentEntity extends BaseEntity{
     @JsonProperty("id")
     String id;
 
-    String rollNo;
+    private String rollNo;
 
-    LocalDateTime admissionDate;
+    private LocalDateTime admissionDate;
 
-    String receiptNo;
+    private String receiptNo;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    UserEntity user;
+    private UserEntity user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "counselor_id", referencedColumnName = "id")
-    UserEntity counselor;
+    @JoinColumn(name = "counsellor_id", referencedColumnName = "id")
+    private UserEntity counsellor;
 
-    String faculty;
+    private String faculty;
 
-    String session;
+    private String session;
 
-    String majorSubjects;
+    private String majorSubjects;
 
-    String irc;
+    private String irc;
 
-    String language;
+    private String language;
 
-    String name;
+    private String name;
 
-    String gender;
+    private String gender;
 
-    String fatherName;
+    private String fatherName;
 
-    String motherName;
+    private String motherName;
 
-    LocalDateTime dateOfBirth;
+    private LocalDateTime dateOfBirth;
 
-    String aadharNo;
+    private String aadharNo;
 
-    String mobileNo;
+    private String mobileNo;
 
-    String religion;
+    private String religion;
 
-    String emailId;
+    private String emailId;
 
-    String category;
+    private String category;
 
-    String caste;
-
-    @OneToOne
-    AddressEntity presentAddress;
+    private String caste;
 
     @OneToOne
-    AddressEntity permanentAddress;
+    private AddressEntity presentAddress;
 
-    String maritalStatus;
+    @OneToOne
+    private AddressEntity permanentAddress;
+
+    private String maritalStatus;
 
     @OneToMany
-    List<AcademicDetails> academicDetails;
+    private Set<AcademicDetails> academicDetails;
 
-    String nationality;
+    private String nationality;
 
 }

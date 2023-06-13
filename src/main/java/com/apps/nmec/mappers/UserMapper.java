@@ -3,7 +3,6 @@ package com.apps.nmec.mappers;
 import com.apps.nmec.AppConstants;
 import com.apps.nmec.entities.RoleEntity;
 import com.apps.nmec.entities.UserEntity;
-import com.apps.nmec.enums.ERole;
 import com.apps.nmec.models.UserModel;
 import com.apps.nmec.requests.StudentRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -60,10 +58,14 @@ public class UserMapper {
         userEntity.setName(userModel.getName());
         userEntity.setEmail(userModel.getEmail());
         userEntity.setPassword(passwordEncoder.encode(userModel.getPassword()));
-        userEntity.setRoles(new HashSet<RoleEntity>());
+//        userEntity.setRoles(userModel.getRoles().stream()
+//                .filter( e -> {return e != ERole.ADMIN;})
+//                .map( e -> { return RoleEntity.builder().role(e).build();})
+//                .collect(Collectors.toSet()));
+//        userEntity.addRole(RoleEntity.builder().role(ERole.USER).build());
         userEntity.setStartDate(LocalDateTime.now());
         userEntity.setEndDate(LocalDateTime.now().plusDays(10));
-        userEntity.setActiveUser(userModel.getActiveUser());
+        userEntity.setActiveUser(AppConstants.Y);
         userEntity.setContactNo(userModel.getContactNo());
         return userEntity;
     }
@@ -79,11 +81,11 @@ public class UserMapper {
         userEntity.setName(studentRequest.getName());
         userEntity.setEmail(studentRequest.getEmailId());
         userEntity.setPassword(passwordEncoder.encode(studentRequest.getName().substring(0,4).toLowerCase() + studentRequest.getAadharNo().substring(0,4)));
-        userEntity.setRoles(new HashSet<RoleEntity>());
-        userEntity.addRole(RoleEntity.builder().role(ERole.CANDIDATE).build());
+//        userEntity.addRole(RoleEntity.builder().role(ERole.CANDIDATE).build());
+//        userEntity.addRole(RoleEntity.builder().role(ERole.USER).build());
         userEntity.setStartDate(LocalDateTime.now());
         userEntity.setEndDate(LocalDateTime.now().plusDays(10));
-        userEntity.setActiveUser(AppConstants.N);
+        userEntity.setActiveUser(AppConstants.Y);
         userEntity.setContactNo(studentRequest.getMobileNo());
         return userEntity;
     }

@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,7 +51,7 @@ public class ViewUsersController {
     @GetMapping("/all/counsellors")
     @PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")
     public ResponseEntity<List<UserModel>> getAllCounsellors(){
-        List<UserModel> userModelList = viewUsersService.getAllUsers().stream().filter(user->user.getRoles().contains(ERole.COUNSELOR)).collect(Collectors.toList());
+        List<UserModel> userModelList = viewUsersService.getAllUsers().stream().filter(user->user.getRoles().contains(ERole.COUNSELLOR)).collect(Collectors.toList());
         return ResponseEntity.ok().body(userModelList);
     }
 
