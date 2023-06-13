@@ -1,16 +1,23 @@
 package com.apps.nmec.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
-@Entity
-@EqualsAndHashCode(callSuper=true)
 @Data
-public class AcademicDetails extends Auditable<String> {
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper=true)
+@Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@Entity
+@Table(name="academic_details")
+public class AcademicDetails extends Auditable<String> implements Serializable {
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -39,5 +46,6 @@ public class AcademicDetails extends Auditable<String> {
 
     @ManyToOne
     @JoinColumn(name="student_id")
+    @JsonIgnore
     StudentEntity student;
 }

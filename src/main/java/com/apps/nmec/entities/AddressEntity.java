@@ -1,13 +1,22 @@
 package com.apps.nmec.entities;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @Table(name="address")
-public class AddressEntity {
+public class AddressEntity implements Serializable {
 
 	@Id
 	@GeneratedValue(generator = "uuid2")
