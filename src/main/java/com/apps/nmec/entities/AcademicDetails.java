@@ -54,7 +54,7 @@ public class AcademicDetails extends Auditable<String> implements Serializable {
     @NotNull
     private String division;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="student_id")
     @JsonIgnore
     private StudentEntity student;

@@ -1,11 +1,19 @@
 package com.apps.nmec.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @Table(name="state")
 public class StateEntity {

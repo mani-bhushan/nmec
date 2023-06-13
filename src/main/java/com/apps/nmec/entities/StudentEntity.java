@@ -73,15 +73,15 @@ public class StudentEntity extends BaseEntity {
 
     private String caste;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private AddressEntity presentAddress;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private AddressEntity permanentAddress;
 
     private String maritalStatus;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<AcademicDetails> academicDetails;
 
     private String nationality;
