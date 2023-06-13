@@ -13,6 +13,7 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+	mapstruct
 }
 
 repositories {
@@ -44,6 +45,14 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
+
+
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile) {
+	options.compilerArgs = [
+			'-Amapstruct.suppressGeneratorTimestamp=true'
+	]
 }

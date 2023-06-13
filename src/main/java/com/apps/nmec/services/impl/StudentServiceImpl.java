@@ -1,5 +1,6 @@
 package com.apps.nmec.services.impl;
 
+import com.apps.nmec.AppConstants;
 import com.apps.nmec.entities.StudentEntity;
 import com.apps.nmec.entities.UserEntity;
 import com.apps.nmec.enums.ERole;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,17 +34,19 @@ public class StudentServiceImpl implements StudentService {
 
     private final UserMapper userMapper;
 
+    @Transactional(rollbackOn = Exception.class)
     public StudentResponse addStudent(final StudentRequest studentRequest){
         final UserEntity counsellor = userRepository.findById(studentRequest.getCounsellorId())
                 .orElseThrow(() -> new UsernameNotFoundException("Counsellor " + studentRequest.getCounsellorId() + " not found."));
         final UserEntity userEntity = userMapper.mapStudentRequestToUserEntity(studentRequest);
         userEntity.addRole(roleRepository.findByRole(ERole.CANDIDATE));
         userEntity.addRole(roleRepository.findByRole(ERole.USER));
-        userRepository.save(userEntity);
+        userRepository.saveAndFlush(userEntity);
         studentRequest.setUser(userEntity);
         final StudentEntity studentEntity = studentMapper.mapRequestToEntity(studentRequest);
         studentEntity.setCounsellor(counsellor);
-        studentRepository.save(studentEntity);
+        studentEntity.setIsActive(AppConstants.Y);
+        studentRepository.saveAndFlush(studentEntity);
         return studentMapper.mapEntityToResponse(studentEntity);
     }
 
