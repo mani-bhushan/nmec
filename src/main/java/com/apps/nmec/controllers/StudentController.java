@@ -11,7 +11,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/students")
+@RequestMapping("/api/student")
 public class StudentController {
 
     @Autowired
@@ -21,7 +21,7 @@ public class StudentController {
 
     @PostMapping("/add")
     public StudentResponse addStudent(@RequestBody @Valid StudentRequest studentRequest){
-        return studentService.saveStudent(studentRequest);
+        return studentService.addStudent(studentRequest);
     }
 
     @GetMapping("/all")

@@ -1,8 +1,10 @@
 package com.apps.nmec.services.impl;
 
-import com.apps.nmec.entities.StudentEntity;
+import com.apps.nmec.entities.UserEntity;
 import com.apps.nmec.mappers.StudentMapper;
+import com.apps.nmec.mappers.UserMapper;
 import com.apps.nmec.repositories.StudentRepository;
+import com.apps.nmec.repositories.UserRepository;
 import com.apps.nmec.requests.StudentRequest;
 import com.apps.nmec.responses.StudentResponse;
 import com.apps.nmec.services.StudentService;
@@ -18,9 +20,15 @@ public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
 
+    private final UserRepository userRepository;
+
     private final StudentMapper studentMapper;
 
-    public StudentResponse saveStudent(StudentRequest studentRequest){
+    private final UserMapper userMapper;
+
+    public StudentResponse addStudent(final StudentRequest studentRequest){
+        final UserEntity userEntity = userMapper.mapStudentRequestToUserEntity(studentRequest);
+        userRepository.saveAndFlush(userEntity);
         return studentMapper.mapEntityToResponse(studentRepository.save(studentMapper.mapRequestToEntity(studentRequest)));
     }
 

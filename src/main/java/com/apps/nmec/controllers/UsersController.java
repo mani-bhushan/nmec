@@ -17,7 +17,7 @@ public class UsersController {
     @Autowired private UserService userService;
 
     @PostMapping("/add")
-    @PreAuthorize("hasAnyAuthority('ADMIN','COUNSELOR','STAFF')")
+    //@PreAuthorize("hasAnyAuthority('ADMIN','COUNSELOR','STAFF')")
     public ResponseEntity<UserModel> addUser(@RequestBody @Valid UserModel userModel) {
         UserModel response = userService.createUser(userModel);
         return new ResponseEntity<UserModel>(response, HttpStatus.CREATED);

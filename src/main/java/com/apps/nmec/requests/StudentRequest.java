@@ -2,14 +2,19 @@ package com.apps.nmec.requests;
 
 import com.apps.nmec.entities.AcademicDetails;
 import com.apps.nmec.entities.AddressEntity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-@NotNull
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class StudentRequest {
 
     @NotNull

@@ -1,8 +1,11 @@
 package com.apps.nmec.mappers;
 
+import com.apps.nmec.AppConstants;
 import com.apps.nmec.entities.RoleEntity;
 import com.apps.nmec.entities.UserEntity;
+import com.apps.nmec.enums.ERole;
 import com.apps.nmec.models.UserModel;
+import com.apps.nmec.requests.StudentRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -68,6 +71,20 @@ public class UserMapper {
     //Test Role -> USER, ADMIN, STAFF
     public UserEntity mapRolesToUserEntity(UserEntity userEntity, Set<RoleEntity> roleEntities) {
         userEntity.setRoles(roleEntities);
+        return userEntity;
+    }
+
+    public UserEntity mapStudentRequestToUserEntity(StudentRequest studentRequest) {
+        final UserEntity userEntity = new UserEntity();
+        userEntity.setName(studentRequest.getName());
+        userEntity.setEmail(studentRequest.getEmailId());
+        userEntity.setPassword(passwordEncoder.encode(studentRequest.getName().substring(0,4).toLowerCase() + studentRequest.getAadharNo().substring(0,4)));
+        userEntity.setRoles(new HashSet<RoleEntity>());
+        userEntity.addRole(RoleEntity.builder().role(ERole.CANDIDATE).build());
+        userEntity.setStartDate(LocalDateTime.now());
+        userEntity.setEndDate(LocalDateTime.now().plusDays(10));
+        userEntity.setActiveUser(AppConstants.N);
+        userEntity.setContactNo(studentRequest.getMobileNo());
         return userEntity;
     }
 }
