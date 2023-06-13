@@ -3,6 +3,7 @@ package com.apps.nmec.controllers;
 import com.apps.nmec.enums.ERole;
 import com.apps.nmec.models.UserModel;
 import com.apps.nmec.services.ViewUsersService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,12 +20,15 @@ public class ViewUsersController {
     @Autowired
     private ViewUsersService viewUsersService;
 
+    @Operation(summary = "all users")
     @GetMapping("/all/users")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<UserModel>> getAllUsers(){
         List<UserModel> userModelList = viewUsersService.getAllUsers();
         return ResponseEntity.ok().body(userModelList);
     }
+
+    @Operation(summary = "all users")
     @GetMapping("/added/users")
     @PreAuthorize("hasAnyAuthority('ADMIN','COUNSELOR','STAFF')")
     public ResponseEntity<List<UserModel>> fetchAddedUsers(@CurrentSecurityContext(expression="authentication?.name") String xAuthUser){
@@ -32,6 +36,7 @@ public class ViewUsersController {
         return ResponseEntity.ok().body(userModelList);
     }
 
+    @Operation(summary = "all users added by user")
     @GetMapping("/createdby/{emailId}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<UserModel>> fetchUsersCreatedByEmailId(@PathVariable String emailId){
@@ -39,6 +44,7 @@ public class ViewUsersController {
         return ResponseEntity.ok().body(userModelList);
     }
 
+    @Operation(summary = "all counsellors")
     @GetMapping("/all/counsellors")
     @PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")
     public ResponseEntity<List<UserModel>> getAllCounsellors(){

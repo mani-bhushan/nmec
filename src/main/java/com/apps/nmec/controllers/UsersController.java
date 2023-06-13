@@ -2,6 +2,7 @@ package com.apps.nmec.controllers;
 
 import com.apps.nmec.models.UserModel;
 import com.apps.nmec.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ public class UsersController {
 
     @Autowired private UserService userService;
 
+    @Operation(summary = "add user")
     @PostMapping("/add")
     //@PreAuthorize("hasAnyAuthority('ADMIN','COUNSELOR','STAFF')")
     public ResponseEntity<UserModel> addUser(@RequestBody @Valid UserModel userModel) {
@@ -23,6 +25,7 @@ public class UsersController {
         return new ResponseEntity<UserModel>(response, HttpStatus.CREATED);
     }
 
+    @Operation(summary = "update role")
     @PatchMapping("/update/role")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<UserModel> updateRoles(@RequestBody @Valid UserModel userModel) {

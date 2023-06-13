@@ -6,6 +6,7 @@ import com.apps.nmec.entities.UserEntity;
 import com.apps.nmec.requests.AuthRequest;
 import com.apps.nmec.responses.AuthResponse;
 import com.apps.nmec.utils.JwtTokenUtil;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,8 @@ public class AuthController {
 	@Autowired AuthenticationManager authManager;
 	@Autowired
 	JwtTokenUtil jwtUtil;
-	
+
+	@Operation(summary = "login user")
 	@PostMapping("/login")
 	public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthRequest request) {
 		try {
