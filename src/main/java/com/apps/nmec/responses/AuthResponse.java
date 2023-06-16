@@ -1,15 +1,19 @@
 package com.apps.nmec.responses;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.apps.nmec.enums.ERole;
+import lombok.*;
+
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@EqualsAndHashCode
 public class AuthResponse {
 
 	private String email;
+	private Set<ERole> roles;
 	private String accessToken;
 
 }

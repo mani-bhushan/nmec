@@ -1,7 +1,6 @@
 package com.apps.nmec.controllers;
 
-import javax.validation.Valid;
-
+import com.apps.nmec.entities.RoleEntity;
 import com.apps.nmec.entities.UserEntity;
 import com.apps.nmec.requests.AuthRequest;
 import com.apps.nmec.responses.AuthResponse;
@@ -18,6 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -37,7 +39,9 @@ public class AuthController {
 			
 			UserEntity userEntity = (UserEntity) authentication.getPrincipal();
 			String accessToken = jwtUtil.generateAccessToken(userEntity);
-			AuthResponse response = new AuthResponse(userEntity.getEmail(), accessToken);
+			AuthResponse response = new AuthResponse(userEntity.getEmail()
+					, userEntity.getRoles().stream().map(RoleEntity::getRole).collect(Collectors.toSet())
+					, accessToken);
 			
 			return ResponseEntity.ok().body(response);
 			
