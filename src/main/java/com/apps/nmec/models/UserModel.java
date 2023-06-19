@@ -18,6 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
 @Builder
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class UserModel implements Serializable {
 
 	private static final long serialVersionUID = 4926468583005150702L;

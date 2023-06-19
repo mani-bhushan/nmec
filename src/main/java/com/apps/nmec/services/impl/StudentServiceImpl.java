@@ -41,7 +41,6 @@ public class StudentServiceImpl implements StudentService {
         final UserEntity userEntity = userMapper.mapStudentRequestToUserEntity(studentRequest);
         userEntity.addRole(roleRepository.findByRole(ERole.CANDIDATE));
         userEntity.addRole(roleRepository.findByRole(ERole.USER));
-        //userRepository.saveAndFlush(userEntity);
         studentRequest.setUser(userEntity);
         final StudentEntity studentEntity = studentMapper.mapRequestToEntity(studentRequest);
         studentEntity.setCounsellor(counsellor);
@@ -53,4 +52,5 @@ public class StudentServiceImpl implements StudentService {
     public List<StudentResponse> getStudents(){
         return studentRepository.findAll().stream().map(studentMapper::mapEntityToResponse).collect(Collectors.toList());
     }
+
 }

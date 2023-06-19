@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -54,9 +55,17 @@ public class UserService {
         return userMapper.mapUserEntityToNewModel(userEntity);
     }
 
-//    public static void main(String[] args) {
-//        Set e = new HashSet<>();
-//        Set p = Optional.ofNullable(e).filter(y -> !y.isEmpty()).orElseThrow(() -> new UsernameNotFoundException("Roles not found"));
-//        System.out.println("Completed..." + p);
-//    }
+    /**
+     * @return
+     */
+    // @Override
+    @Transactional(rollbackOn = { UsernameNotFoundException.class, Exception.class })
+    public Boolean updateUserPassword(UserModel userModel) {
+        final UserEntity userEntity = userRepository.findById(userModel.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("User " + userModel.getEmail() + " not found."));
+        userEntity.setPassword(userModel.getPassword());
+        userRepository.save(userEntity);
+        return true;
+    }
+
 }

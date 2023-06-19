@@ -19,7 +19,7 @@ public class UsersController {
 
     @Operation(summary = "add user")
     @PostMapping("/add")
-    //@PreAuthorize("hasAnyAuthority('ADMIN','COUNSELLOR','STAFF')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','COUNSELLOR','STAFF')")
     public ResponseEntity<UserModel> addUser(@RequestBody @Valid UserModel userModel) {
         final UserModel response = userService.createUser(userModel);
         return new ResponseEntity<UserModel>(response, HttpStatus.CREATED);
@@ -32,6 +32,12 @@ public class UsersController {
 
         UserModel response = userService.updateUserRole(userModel);
         return new ResponseEntity<UserModel>(response, HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "update user password")
+    @PatchMapping("/update/password")
+    public ResponseEntity<Boolean>updateUserPassword(@RequestBody UserModel userModel) {
+        return new ResponseEntity<Boolean>(userService.updateUserPassword(userModel), HttpStatus.ACCEPTED);
     }
 
 }

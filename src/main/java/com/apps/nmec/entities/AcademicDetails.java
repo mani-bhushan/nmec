@@ -1,6 +1,5 @@
 package com.apps.nmec.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
@@ -54,8 +53,4 @@ public class AcademicDetails extends Auditable<String> implements Serializable {
     @NotNull
     private String division;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name="student_id")
-    @JsonIgnore
-    private StudentEntity student;
 }

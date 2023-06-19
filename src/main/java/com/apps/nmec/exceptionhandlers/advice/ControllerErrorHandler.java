@@ -1,7 +1,7 @@
 package com.apps.nmec.exceptionhandlers.advice;
 
-import com.apps.nmec.responses.ErrorResponse;
 import com.apps.nmec.responses.AppError;
+import com.apps.nmec.responses.ErrorResponse;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestControllerAdvice
 public class ControllerErrorHandler extends ResponseEntityExceptionHandler {
-    // public static final String BAD_REQUEST = "BAD_REQUEST";
+
     @Override
     public ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException exception,
                                                           HttpHeaders headers, HttpStatus status, WebRequest request) {

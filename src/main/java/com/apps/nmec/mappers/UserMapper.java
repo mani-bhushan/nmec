@@ -80,9 +80,7 @@ public class UserMapper {
         final UserEntity userEntity = new UserEntity();
         userEntity.setName(studentRequest.getName());
         userEntity.setEmail(studentRequest.getEmailId());
-        userEntity.setPassword(passwordEncoder.encode(studentRequest.getName().substring(0,4).toLowerCase() + studentRequest.getAadharNo().substring(0,4)));
-//        userEntity.addRole(RoleEntity.builder().role(ERole.CANDIDATE).build());
-//        userEntity.addRole(RoleEntity.builder().role(ERole.USER).build());
+        userEntity.setPassword(passwordEncoder.encode(studentRequest.getName().substring(0,4).toUpperCase() + studentRequest.getAadharNo().substring(0,4).toUpperCase()));
         userEntity.setStartDate(LocalDateTime.now());
         userEntity.setEndDate(LocalDateTime.now().plusDays(10));
         userEntity.setActiveUser(AppConstants.Y);
