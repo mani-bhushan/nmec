@@ -39,7 +39,7 @@ public class AuthController {
 			
 			UserEntity userEntity = (UserEntity) authentication.getPrincipal();
 			String accessToken = jwtUtil.generateAccessToken(userEntity);
-			AuthResponse response = new AuthResponse(userEntity.getEmail()
+			AuthResponse response = new AuthResponse(userEntity.getName(),userEntity.getEmail()
 					, userEntity.getRoles().stream().map(RoleEntity::getRole).collect(Collectors.toSet())
 					, accessToken);
 			

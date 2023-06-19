@@ -12,6 +12,7 @@ import java.util.Set;
 @EqualsAndHashCode
 public class AuthResponse {
 
+	private String name;
 	private String email;
 	private Set<ERole> roles;
 	private String accessToken;
