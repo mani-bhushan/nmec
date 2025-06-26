@@ -89,3 +89,82 @@ exit /b %EXIT_CODE%
 if "%OS%"=="Windows_NT" endlocal
 
 :omega
+
+
+
+
+
+
+
+
+
+import os
+import re
+
+def reverse_read_lines(filepath, encoding='utf-8'):
+    with open(filepath, 'rb') as f:
+        f.seek(0, os.SEEK_END)
+        position = f.tell()
+        line = bytearray()
+        
+        while position > 0:
+            position -= 1
+            f.seek(position)
+            byte = f.read(1)
+            
+            if byte == b'\n':
+                if line:
+                    yield line[::-1].decode(encoding, errors='ignore')
+                    line = bytearray()
+            else:
+                line.append(byte[0])
+
+        if line:
+            yield line[::-1].decode(encoding, errors='ignore')
+
+def get_replacement_array_from_tsv(tsv_path):
+    array_values = []
+    with open(tsv_path, 'r', encoding='utf-8') as tsv:
+        for line in tsv:
+            parts = line.strip().split('\t')
+            if len(parts) >= 2:
+                array_values.append(parts[1].strip())
+    return array_values
+
+def build_array_block(indent, values):
+    inner = ',\n'.join([f'{indent}"{v}"' for v in values])
+    return f'[\n{inner}\n]'
+
+def replace_multiline_array_bottom_up(file_path, tsv_path, key='"abc.key"'):
+    replacement_values = get_replacement_array_from_tsv(tsv_path)
+    
+    lines = []
+    buffer = []
+    collecting = False
+    modified = False
+
+    for line in reverse_read_lines(file_path):
+        stripped = line.strip()
+
+        if not modified:
+            if not collecting and stripped.startswith(']'):
+                # Start collecting the multiline array block from the end
+                collecting = True
+                buffer.append(line)
+                continue
+
+            if collecting:
+                buffer.append(line)
+                if key in line:
+                    # Found the start of the array block
+                    collecting = False
+                    modified = True
+
+                    # Determine the base indent
+                    indent_match = re.match(r'^(\s*)', line)
+                    indent = indent_match.group(1) if indent_match else ""
+
+                    # Build replacement block
+                    new_array_block = build_array_block(indent + "  ", replacement_values)
+                    replacement_line = re.sub(
+                        r'("abc\.key"\s*:\s*)
